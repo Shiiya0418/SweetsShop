@@ -43,9 +43,12 @@ if __name__ == "__main__":
     
     shop = Shop(items)
 
-    with open('./shopping_list.csv') as f:
-        shopping_lists = [[int(e) for e in line.split(',')] for line in f.readlines()]
-    
+    try:
+        with open('./shopping_list.csv') as f:
+            shopping_lists = [[int(e) for e in line.split(',')] for line in f.readlines()]
+    except FileNotFoundError:
+        print('shopping.csv が見つかりません。\nカレントディレクトリにshopping.csvをおいてください。')
+
     with open('./results.csv', 'w') as f:
         f.write('合計,購入,当たり\n')
         for i, shopping_list in enumerate(shopping_lists):
@@ -59,12 +62,3 @@ if __name__ == "__main__":
             all_item_price = sum_price + sum_prize
             print(f'{i+1}: {all_item_price}円 (購入: {sum_price}円, 当たり: {sum_prize}円)')
             f.write(f'{all_item_price},{sum_price},{sum_prize}\n')
-
-
-
-        
-            
-
-        
-        
-        
